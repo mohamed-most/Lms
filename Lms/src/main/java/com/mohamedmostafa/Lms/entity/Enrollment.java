@@ -1,5 +1,6 @@
 package com.mohamedmostafa.Lms.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.mohamedmostafa.Lms.enums.CourseStatus;
 import jakarta.persistence.*;
 import lombok.*;
@@ -29,16 +30,20 @@ public class Enrollment {
     @JoinColumn(name = "course_id", nullable = false)
     private Course course;
 
-    private Double grade;
+//    private Double grade;
 
     @Enumerated(EnumType.STRING) // store enum as VARCHAR in DB
     @Column(nullable = false)
     private CourseStatus status;
 
     @CreationTimestamp
+    @Column(name = "created_at", updatable = false)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdAt;
 
     @UpdateTimestamp
+    @Column(name = "updated_at")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime updatedAt;
 }
 
