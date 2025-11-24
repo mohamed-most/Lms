@@ -10,18 +10,17 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    private final String message = "Something went wrong !!";
+
+    
     @ExceptionHandler(ResourceNotFoundEx.class)
-    public ResponseEntity<ApiResponse<?>> handleStudentNotFound(ResourceNotFoundEx resourceNotFoundEx) {
-        ApiResponse<?> response = ApiResponse.builder().success(false)
-                .error("Bad Request : " + resourceNotFoundEx.getMessage()).build();
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+    public ResponseEntity<ApiResponse<String>> handleResourceNotFound(ResourceNotFoundEx resourceNotFoundEx) {
+        return ApiResponse.error("Bad Request : " + resourceNotFoundEx.getMessage(), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ApiResponse<?>> handleGlobalException(Exception exception) {
-        ApiResponse<?> response = ApiResponse.builder().success(false)
-                .error(exception.getMessage()).build();
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+    public ResponseEntity<ApiResponse<String>> handleGlobalException(Exception exception) {
+        return ApiResponse.error(message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }

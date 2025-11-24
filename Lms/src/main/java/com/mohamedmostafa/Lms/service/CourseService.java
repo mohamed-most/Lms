@@ -1,6 +1,7 @@
 package com.mohamedmostafa.Lms.service;
 
 
+import com.mohamedmostafa.Lms.dto.request.CourseRequestDto;
 import com.mohamedmostafa.Lms.entity.Course;
 import com.mohamedmostafa.Lms.errors.ResourceNotFoundEx;
 import com.mohamedmostafa.Lms.repository.CourseRepo;
@@ -11,31 +12,52 @@ import java.util.List;
 
 @Service
 public class CourseService {
-    private final CourseRepo courseRepo;
 
+    private final CourseRepo courseRepo;
 
     @Autowired
     public CourseService(CourseRepo courseRepo) {
         this.courseRepo = courseRepo;
     }
 
-
     public List<Course> getAllCourses() {
-        List<Course> courseList = courseRepo.findAll();
-        if (courseList.isEmpty()) {
-            throw new ResourceNotFoundEx("there are no courses in the system yet ");
-        }
-        return courseList;
+        return courseRepo.findAll(); // return empty list, not exception
     }
 
-    public Course getSpecificCourse(Integer courseId) {
+    public Course getCourseById(Integer courseId) {
         return courseRepo.findById(courseId)
-                .orElseThrow(() -> new ResourceNotFoundEx("There is no course with id: " + courseId));
+                .orElseThrow(() -> new ResourceNotFoundEx(
+                        "Course not found with id: " + courseId
+                ));
     }
 
     public Course createCourse(Course course) {
-        if (course == null) throw new RuntimeException("the course body is empty ");
+        return courseRepo.save(course);
+    }
+
+    public Course deleteCourse(Integer courseId) {
+
+        Course course = courseRepo.findById(courseId)
+                .orElseThrow(() -> new ResourceNotFoundEx(
+                        "Course not found with id: " + courseId
+                ));
+
+        courseRepo.delete(course);
+        return course;
+    }
+
+    public Course updateCourseById(Integer courseId, CourseRequestDto courseRequestDto) {
+
+        Course course = courseRepo.findById(courseId)
+                .orElseThrow(() -> new ResourceNotFoundEx(
+                        "Course not found with id: " + courseId
+                ));
+
+        course.setCourseCode(courseRequestDto.getCourseCode());
+        course.setCourseName(courseRequestDto.getCourseName());
+
         return courseRepo.save(course);
     }
 
 }
+

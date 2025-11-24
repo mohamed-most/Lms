@@ -44,7 +44,7 @@ public class CourseController {
 
     @GetMapping("/{courseId}")
     public ResponseEntity<ApiResponse<Course>> getSpecificCourse(@PathVariable("courseId") Integer courseId) {
-        Course course = courseService.getSpecificCourse(courseId);
+        Course course = courseService.getCourseById(courseId);
         return ApiResponse.success(course, HttpStatus.OK);
     }
 
