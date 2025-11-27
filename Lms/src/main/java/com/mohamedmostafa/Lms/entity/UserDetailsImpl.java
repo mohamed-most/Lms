@@ -15,11 +15,14 @@ public class UserDetailsImpl implements UserDetails {
     private final String email;
     private final String password;
     private final Role role;
+    @Getter
+    private final Integer id;
 
-    public UserDetailsImpl(String email, String password, Role role) {
+    public UserDetailsImpl(Integer id, String email, String password, Role role) {
         this.email = email;
         this.password = password;
         this.role = role;
+        this.id = id;
     }
 
     @Override
@@ -57,4 +60,6 @@ public class UserDetailsImpl implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+ 
 }
