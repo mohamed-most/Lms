@@ -7,6 +7,7 @@ import com.mohamedmostafa.Lms.exceptions.ResourceNotFoundEx;
 import com.mohamedmostafa.Lms.mappers.StudentMapper;
 import com.mohamedmostafa.Lms.repositories.StudentRepo;
 import com.mohamedmostafa.Lms.services.abstracts.StudentService;
+import com.mohamedmostafa.Lms.services.concretes.EmailService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -24,12 +25,16 @@ public class AdminStudentService {
     private final StudentService studentService;
     private final StudentRepo studentRepo;
     private final PasswordEncoder passwordEncoder;
+    private final EmailService emailService;
 
     @Autowired
-    public AdminStudentService(StudentService studentService, StudentRepo studentRepo, PasswordEncoder passwordEncoder) {
+    public AdminStudentService(StudentService studentService, StudentRepo studentRepo, PasswordEncoder passwordEncoder,
+                               EmailService emailService
+    ) {
         this.studentService = studentService;
         this.studentRepo = studentRepo;
         this.passwordEncoder = passwordEncoder;
+        this.emailService = emailService;
     }
 
     // Find a student by ID
@@ -48,6 +53,7 @@ public class AdminStudentService {
     }
 
 
+    @Transactional
     public StudentResponseDto createStudent(StudentSignUpRequestDto studentSignUpRequestDto) {
         // Check if email already exists
         if (studentRepo.findByEmail(studentSignUpRequestDto.getEmail()).isPresent()) {
@@ -62,8 +68,12 @@ public class AdminStudentService {
                 .username(studentSignUpRequestDto.getUsername())
                 .password(passwordEncoder.encode(studentSignUpRequestDto.getPassword()))
                 .build();
-        System.out.println(newStudent);
+
+
         studentRepo.save(newStudent);
+
+
+        emailService.sendEmail(newStudent.getEmail(), "welcome to Lms ", "hello " + newStudent.getUsername());
         return toResponseDto(newStudent);
     }
 
