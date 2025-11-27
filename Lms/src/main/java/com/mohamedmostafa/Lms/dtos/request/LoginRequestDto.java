@@ -1,13 +1,9 @@
 package com.mohamedmostafa.Lms.dtos.request;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Value;
 
-@Setter
-@Getter
-@Builder
+@Value
 public class LoginRequestDto {
-    private String email;
-    private String password;
+    String email;
+    String password;
 }

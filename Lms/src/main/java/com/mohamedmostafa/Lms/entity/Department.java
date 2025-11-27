@@ -3,12 +3,14 @@ package com.mohamedmostafa.Lms.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 import java.util.List;
 
-@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 @Entity
 @Builder
 public class Department {
@@ -19,10 +21,13 @@ public class Department {
 
     @NotBlank
     @NotNull
+    @Column(unique = true)
     private String department_name;
+
 
     @NotNull
     @NotBlank
+    @Column(unique = true)
     private String department_code;
 
     @OneToMany(mappedBy = "department", cascade = CascadeType.ALL)
