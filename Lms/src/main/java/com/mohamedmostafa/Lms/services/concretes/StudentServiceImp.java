@@ -4,18 +4,16 @@ import com.mohamedmostafa.Lms.dtos.response.StudentResponseDto;
 import com.mohamedmostafa.Lms.entity.Student;
 import com.mohamedmostafa.Lms.exceptions.BadRequestException;
 import com.mohamedmostafa.Lms.exceptions.ResourceNotFoundEx;
-import com.mohamedmostafa.Lms.mappers.StudentMapper;
 import com.mohamedmostafa.Lms.repositories.StudentRepo;
 import com.mohamedmostafa.Lms.security.UserDetailsImpl;
 import com.mohamedmostafa.Lms.services.abstracts.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
-
 import static com.mohamedmostafa.Lms.mappers.StudentMapper.toResponseDto;
-import static com.mohamedmostafa.Lms.messages.ControllersMessages.*;
+import static com.mohamedmostafa.Lms.messages.ControllersMessages.STUDENT_NOT_FOUND_MSG;
 
 @Service
 public class StudentServiceImp implements StudentService {
@@ -27,47 +25,10 @@ public class StudentServiceImp implements StudentService {
         this.studentRepo = studentRepo;
     }
 
-    // Find a student by ID
-    public StudentResponseDto findStudent(Integer studentId) {
-        Student student = studentRepo.findById(studentId)
-                .orElseThrow(() -> new ResourceNotFoundEx(STUDENT_NOT_FOUND_MSG));
-        return toResponseDto(student);
-    }
 
-
-    // Get all students
-    public List<StudentResponseDto> getAllStudents() {
-        List<Student> students = studentRepo.findAll();
-
-        return Optional.of(students).filter(list -> !list.isEmpty())
-                .orElseThrow(() -> new ResourceNotFoundEx(NO_STUDENTS_IN_SYSTEM_MSG))
-                .stream().map(StudentMapper::toResponseDto).toList();
-    }
-
-    public StudentResponseDto createStudent(Student student) {
-
-        Student createdStudent = studentRepo.findByEmail(student.getEmail()).orElseThrow(() -> {
-            throw new RuntimeException(EMAIL_IN_USE_MSG);
-        });
-
-        return toResponseDto(createdStudent);
-
-    }
-
-    public void deleteStudent(Integer id) {
-        Student existingStudent = studentRepo.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundEx(STUDENT_NOT_FOUND_MSG));
-        studentRepo.delete(existingStudent);
-    }
-
-
-//    public StudentResponseDto findStudentByEmail(String email) {
-//        Student student = studentRepo.findByEmail(email).
-//                orElseThrow(() -> new ResourceNotFoundEx(EMAIL_NOT_FOUND_MSG));
-//        return toResponseDto(student);
-//    }
-
-    public StudentResponseDto getStudent(Integer studentId, UserDetailsImpl loggedUser) {
+    public StudentResponseDto getStudent(Integer studentId) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDetailsImpl loggedUser = (UserDetailsImpl) auth.getPrincipal();
 
         boolean isAdmin = loggedUser.getAuthorities().stream()
                 .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));

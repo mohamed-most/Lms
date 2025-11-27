@@ -1,9 +1,7 @@
 package com.mohamedmostafa.Lms.mappers;
 
-import com.mohamedmostafa.Lms.dtos.request.StudentSignUpRequestDto;
 import com.mohamedmostafa.Lms.dtos.response.StudentResponseDto;
 import com.mohamedmostafa.Lms.entity.Student;
-import com.mohamedmostafa.Lms.enums.Role;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -23,12 +21,5 @@ public class StudentMapper {
                 .build();
     }
 
-    public Student toEntityForSignup(StudentSignUpRequestDto dto) {
-        return Student.builder()
-                .username(dto.getUsername())
-                .email(dto.getEmail())
-                .password(passwordEncoder.encode(dto.getPassword()))
-                .role(Role.STUDENT)
-                .build();
-    }
+ 
 }

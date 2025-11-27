@@ -44,7 +44,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
         // Skip JWT check for signup/login
         String path = request.getRequestURI();
-        if (path.startsWith("/api/v1/auth/signup") || path.startsWith("/api/v1/auth/login")) {
+        if (path.startsWith("/api/v1/auth/login")) {
             filterChain.doFilter(request, response);
             return;
         }

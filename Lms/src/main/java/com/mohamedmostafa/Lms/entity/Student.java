@@ -1,23 +1,24 @@
 package com.mohamedmostafa.Lms.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
-import java.util.List;
 
+@AllArgsConstructor
 @Entity
-@Table(name = "students")
 @Getter
 @Setter
 @SuperBuilder
-@Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorValue("STUDENT")
 public class Student extends User {
 
-
-    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
-    private List<Enrollment> enrollments;
+//
+//    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
+//    private List<Enrollment> enrollments;
 
 
 }

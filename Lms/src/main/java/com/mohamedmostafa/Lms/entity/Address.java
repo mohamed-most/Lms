@@ -5,22 +5,21 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import org.hibernate.tool.schema.internal.StandardUserDefinedTypeExporter;
 
 @Entity(name = "address")
 public class Address {
 
 
     @Id
-    private Integer id ;
+    private Integer id;
 
-    private String street ;
+    private String street;
 
-    private String city ;
+    private String city;
 
-    private String country ;
+    private String country;
 
     @ManyToOne
-    @JoinColumn(name = "student_id")
-    private Student student ;
+    @JoinColumn(name = "user_id")
+    private User user;
 }

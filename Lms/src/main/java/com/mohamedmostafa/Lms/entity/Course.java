@@ -8,7 +8,6 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Table(name = "courses")
@@ -30,14 +29,14 @@ public class Course {
     private String courseName;
 
     // Instructor relation
-    @ManyToOne
-    @JoinColumn(name = "instructor_id", nullable = true)
-    private Instructor instructor;
+//    @ManyToOne
+//    @JoinColumn(name = "instructor_id", nullable = true)
+//    private Instructor instructor;
 
     // Students enrolled (via Enrollment entity)
-    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
-    private List<Enrollment> enrollments;
-
+//    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
+//    private List<Enrollment> enrollments;
+//
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
