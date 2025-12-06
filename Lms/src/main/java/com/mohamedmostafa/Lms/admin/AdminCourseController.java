@@ -1,4 +1,4 @@
-package com.mohamedmostafa.Lms.admin.courses;
+package com.mohamedmostafa.Lms.admin;
 
 import com.mohamedmostafa.Lms.dtos.request.CourseRequestDto;
 import com.mohamedmostafa.Lms.dtos.response.ApiResponse;
