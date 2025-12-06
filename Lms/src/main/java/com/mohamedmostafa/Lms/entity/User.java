@@ -46,10 +46,6 @@ public class User {
     LocalDateTime updatedAt;
 
 
-    private String resetToken;
-    private LocalDateTime tokenExpiry;
-
-
     public Role getRole() {
         String className = this.getClass().getSimpleName().toUpperCase(); // e.g., "ADMIN"
         return Role.valueOf(className); // converts String -> Role enum
