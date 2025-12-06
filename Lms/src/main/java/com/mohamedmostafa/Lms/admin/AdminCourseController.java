@@ -1,8 +1,9 @@
-package com.mohamedmostafa.Lms.admin.courses;
+package com.mohamedmostafa.Lms.admin;
 
 import com.mohamedmostafa.Lms.dtos.request.CourseRequestDto;
 import com.mohamedmostafa.Lms.dtos.response.ApiResponse;
 import com.mohamedmostafa.Lms.dtos.response.CourseResponseDto;
+import com.mohamedmostafa.Lms.services.abstracts.CourseService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,11 +15,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/admin/course")
 public class AdminCourseController {
 
-    private final AdminCourseService adminCourseService;
+    private final CourseService courseService;
 
 
-    public AdminCourseController(AdminCourseService adminCourseService) {
-        this.adminCourseService = adminCourseService;
+    public AdminCourseController(CourseService courseService) {
+        this.courseService = courseService;
     }
 
     /*
@@ -27,13 +28,13 @@ public class AdminCourseController {
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping({"", "/"})
     public ResponseEntity<ApiResponse<CourseResponseDto>> createCourse(@Valid @RequestBody CourseRequestDto courseRequestDto) {
-        return ApiResponse.success(adminCourseService.createCourse(courseRequestDto), HttpStatus.CREATED);
+        return ApiResponse.success(courseService.createCourse(courseRequestDto), HttpStatus.CREATED);
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{courseId}")
     public ResponseEntity<ApiResponse<CourseResponseDto>> deleteCourse(@PathVariable int courseId) {
-        return ApiResponse.success(adminCourseService.deleteCourse(courseId), HttpStatus.OK);
+        return ApiResponse.success(courseService.deleteCourse(courseId), HttpStatus.OK);
     }
 
     @PreAuthorize("hasRole('ADMIN')")
@@ -42,6 +43,6 @@ public class AdminCourseController {
                                                                        @Valid @RequestBody CourseRequestDto courseRequestDto
     ) {
 
-        return ApiResponse.success(adminCourseService.updateCourseById(courseId, courseRequestDto), HttpStatus.OK);
+        return ApiResponse.success(courseService.updateCourseById(courseId, courseRequestDto), HttpStatus.OK);
     }
 }

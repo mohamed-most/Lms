@@ -1,5 +1,4 @@
-package com.mohamedmostafa.Lms.admin.departments;
-
+package com.mohamedmostafa.Lms.services.concretes;
 
 import com.mohamedmostafa.Lms.dtos.request.DepartmentRequestDto;
 import com.mohamedmostafa.Lms.dtos.response.DepartmentResponseDto;
@@ -7,18 +6,20 @@ import com.mohamedmostafa.Lms.entity.Department;
 import com.mohamedmostafa.Lms.exceptions.ResourceNotFoundEx;
 import com.mohamedmostafa.Lms.mappers.DepartmentMapper;
 import com.mohamedmostafa.Lms.repositories.DepartmentRepo;
+import com.mohamedmostafa.Lms.services.abstracts.DepartmentService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 import static com.mohamedmostafa.Lms.mappers.DepartmentMapper.toResponseDto;
 
+
 @Service
-public class AdminDepartmentService {
+public class DepartmentServiceImp implements DepartmentService {
 
     private final DepartmentRepo departmentRepo;
 
-    public AdminDepartmentService(DepartmentRepo departmentRepo) {
+    public DepartmentServiceImp(DepartmentRepo departmentRepo) {
         this.departmentRepo = departmentRepo;
     }
 
