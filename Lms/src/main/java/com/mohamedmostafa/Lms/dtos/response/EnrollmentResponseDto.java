@@ -8,9 +8,8 @@ import java.time.LocalDateTime;
 
 @Builder
 @Data
-public class EnrollmentResponse {
+public class EnrollmentResponseDto {
 
-    private Integer enrollmentId;
     private StudentResponseDto student;
     private CourseResponseDto course;
     private LocalDateTime createdAt;

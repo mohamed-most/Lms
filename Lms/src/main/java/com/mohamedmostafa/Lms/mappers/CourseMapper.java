@@ -8,16 +8,16 @@ import org.springframework.stereotype.Component;
 @Component
 public class CourseMapper {
 
-    // Map request DTO to entity
-    public Course toEntity(CourseRequestDto courseRequestDto) {
+
+    public static Course toEntity(CourseRequestDto courseRequestDto) {
         return Course.builder()
                 .courseName(courseRequestDto.getCourseName())
                 .courseCode(courseRequestDto.getCourseCode())
                 .build();
     }
 
-    // Map entity to response DTO
-    public CourseResponseDto toDto(Course course) {
+
+    public static CourseResponseDto toResponseDto(Course course) {
         return CourseResponseDto.builder()
                 .courseName(course.getCourseName())
                 .courseCode(course.getCourseCode())

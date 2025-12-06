@@ -1,5 +1,6 @@
 package com.mohamedmostafa.Lms.utils;
 
+import com.mohamedmostafa.Lms.entity.UserDetailsCustomized;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
@@ -27,15 +28,19 @@ public class JwtUtil {
         this.TOKEN_VALIDITY = token_validity;
     }
 
+    public Integer extractUserId(String token) {
+        return Integer.parseInt(this.extractAllClaims(token).getId());
+    }
+
     private Key getSigningKey() {
         return Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
     }
 
     // Generate token with email as subject
-    public String generateToken(UserDetails userDetails) {
+    public String generateToken(UserDetailsCustomized userDetails) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("role", userDetails.getAuthorities());
-
+        claims.put("id", userDetails.getUserId());
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(userDetails.getUsername()) // email is subject

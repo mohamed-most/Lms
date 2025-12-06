@@ -1,34 +1,33 @@
 package com.mohamedmostafa.Lms.security;
 
+import com.mohamedmostafa.Lms.entity.UserDetailsCustomized;
 import com.mohamedmostafa.Lms.enums.Role;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.UUID;
 
 
-public class UserDetailsImpl implements UserDetails {
+public class UserDetailsImpl implements UserDetailsCustomized {
 
     @Getter
     private final String email;
     private final String password;
     private final Role role;
     @Getter
-    private final UUID id;
+    private final Integer id;
 
-    public UserDetailsImpl(UUID id, String email, String password, Role role) {
+    public UserDetailsImpl(Integer id, String email, String password, Role role) {
         this.email = email;
         this.password = password;
         this.role = role;
         this.id = id;
     }
 
-
-    public UUID getUserId() {
+    @Override
+    public Integer getUserId() {
         return this.getId();
     }
 

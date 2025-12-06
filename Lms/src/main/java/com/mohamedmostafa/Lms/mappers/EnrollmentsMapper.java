@@ -1,5 +1,11 @@
 package com.mohamedmostafa.Lms.mappers;
 
+import com.mohamedmostafa.Lms.dtos.request.EnrollmentRequestDto;
+import com.mohamedmostafa.Lms.dtos.response.EnrollmentResponseDto;
+import com.mohamedmostafa.Lms.entity.Course;
+import com.mohamedmostafa.Lms.entity.Enrollment;
+import com.mohamedmostafa.Lms.entity.Student;
+import com.mohamedmostafa.Lms.enums.CourseStatus;
 import lombok.Data;
 import org.springframework.stereotype.Component;
 
@@ -7,32 +13,23 @@ import org.springframework.stereotype.Component;
 @Component
 public class EnrollmentsMapper {
 
-//    public EnrollmentResponse toEnrollmentsResponse(Enrollment enrollment) {
-//        Student student = enrollment.getStudent();
-//        Course course = enrollment.getCourse();
-//
-//        // Build student DTO
-//        StudentResponseDto studentDTO = StudentResponseDto.builder()
-//                .username(student.getUsername())
-//                .email(student.getEmail())
-//                .build();
-//
-//        // Build course DTO
-//        CourseResponseDto courseDTO = CourseResponseDto.builder()
-//                .courseName(course.getCourseName())
-//                .courseCode(course.getCourseCode())
-//                .build();
-//
-//        // Build enrollment response
-//        EnrollmentResponse enrollmentResponse = EnrollmentResponse.builder()
-//                .enrollmentId(enrollment.getId())
-//                .student(studentDTO)
-//                .course(courseDTO)
-//                .createdAt(enrollment.getCreatedAt())
-//                .status(enrollment.getStatus())
-//                .build();
-//
-//        return enrollmentResponse;
-//    }
+    public static EnrollmentResponseDto toResponseDto(Enrollment enrollment) {
+
+        return EnrollmentResponseDto.builder()
+                .course(CourseMapper.toResponseDto(enrollment.getCourse()))
+                .status(enrollment.getStatus())
+                .student(StudentMapper.toResponseDto(enrollment.getStudent()))
+                .createdAt(enrollment.getCreatedAt())
+                .build();
+    }
+
+    public static Enrollment toEntity(EnrollmentRequestDto enrollmentRequestDto, Student student, Course course) {
+        return Enrollment.builder()
+                .student(student)           // student fetched from JWT
+                .course(course)             // course fetched using courseId
+                .status(CourseStatus.ACTIVE) // default status
+                .build();
+    }
+
 
 }

@@ -1,7 +1,6 @@
 package com.mohamedmostafa.Lms.services.concretes;
 
 
-import com.mohamedmostafa.Lms.dtos.request.CourseRequestDto;
 import com.mohamedmostafa.Lms.entity.Course;
 import com.mohamedmostafa.Lms.exceptions.ResourceNotFoundEx;
 import com.mohamedmostafa.Lms.repositories.CourseRepo;
@@ -31,33 +30,6 @@ public class CourseServiceImp {
                 ));
     }
 
-    public Course createCourse(Course course) {
-        return courseRepo.save(course);
-    }
-
-    public Course deleteCourse(Integer courseId) {
-
-        Course course = courseRepo.findById(courseId)
-                .orElseThrow(() -> new ResourceNotFoundEx(
-                        "Course not found with id: " + courseId
-                ));
-
-        courseRepo.delete(course);
-        return course;
-    }
-
-    public Course updateCourseById(Integer courseId, CourseRequestDto courseRequestDto) {
-
-        Course course = courseRepo.findById(courseId)
-                .orElseThrow(() -> new ResourceNotFoundEx(
-                        "Course not found with id: " + courseId
-                ));
-
-        course.setCourseCode(courseRequestDto.getCourseCode());
-        course.setCourseName(courseRequestDto.getCourseName());
-
-        return courseRepo.save(course);
-    }
 
 }
 

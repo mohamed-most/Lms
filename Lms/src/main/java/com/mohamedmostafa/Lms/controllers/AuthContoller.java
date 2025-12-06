@@ -3,6 +3,7 @@ package com.mohamedmostafa.Lms.controllers;
 
 import com.mohamedmostafa.Lms.dtos.request.LoginRequestDto;
 import com.mohamedmostafa.Lms.dtos.response.ApiResponse;
+import com.mohamedmostafa.Lms.entity.UserDetailsCustomized;
 import com.mohamedmostafa.Lms.mappers.StudentMapper;
 import com.mohamedmostafa.Lms.services.abstracts.AuthService;
 import com.mohamedmostafa.Lms.services.concretes.StudentServiceImp;
@@ -13,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -57,7 +57,7 @@ public class AuthContoller {
                             loginDto.getPassword()
                     )
             );
-            UserDetails userDetails = (UserDetails) auth.getPrincipal();
+            UserDetailsCustomized userDetails = (UserDetailsCustomized) auth.getPrincipal();
             String token = jwtUtil.generateToken(userDetails);
 
             //TODO : need refactor as make Mapper to this

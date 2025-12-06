@@ -1,14 +1,13 @@
 package com.mohamedmostafa.Lms.entity;
 
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
-import java.time.LocalDateTime;
-import java.util.UUID;
+import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "courses")
@@ -22,7 +21,7 @@ public class Course {
     @Id
     @GeneratedValue
     @Column(updatable = false, nullable = false)
-    private UUID id;
+    private Integer id;
 
     @Column(nullable = false, unique = true)
     private String courseCode;
@@ -36,19 +35,17 @@ public class Course {
 //    private Instructor instructor;
 
     // Students enrolled (via Enrollment entity)
-//    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
-//    private List<Enrollment> enrollments;
-//
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
+    private List<Enrollment> enrollments;
 
-    @CreationTimestamp
+
     @Column(name = "created_at", updatable = false)
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime createdAt;
+    @CreatedDate
+    private Date createdAt;
 
-    @UpdateTimestamp
+    @LastModifiedDate
     @Column(name = "updated_at")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime updatedAt;
+    private Date updatedAt;
 
 }
 

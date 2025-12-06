@@ -4,13 +4,14 @@ package com.mohamedmostafa.Lms.services.concretes;
 import com.mohamedmostafa.Lms.dtos.request.LoginRequestDto;
 import com.mohamedmostafa.Lms.dtos.response.ApiResponse;
 import com.mohamedmostafa.Lms.entity.User;
+import com.mohamedmostafa.Lms.entity.UserDetailsCustomized;
 import com.mohamedmostafa.Lms.exceptions.ResourceNotFoundEx;
 import com.mohamedmostafa.Lms.repositories.UserRepo;
+import com.mohamedmostafa.Lms.security.UserDetailsImpl;
 import com.mohamedmostafa.Lms.services.abstracts.AuthService;
 import com.mohamedmostafa.Lms.utils.JwtUtil;
 import org.springframework.context.annotation.Primary;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -43,7 +44,7 @@ public class AuthServiceImp implements AuthService {
             throw new RuntimeException("Invalid credentials"); // you can create a custom exception
         }
         // 3️⃣ Convert User to UserDetails
-        UserDetails userDetails = new com.mohamedmostafa.Lms.security.UserDetailsImpl(
+        UserDetailsCustomized userDetails = new UserDetailsImpl(
                 user.getId(),
                 user.getEmail(),
                 user.getPassword(),

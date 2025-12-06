@@ -12,7 +12,6 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -27,7 +26,8 @@ public class User {
 
     @Id
     @Column(updatable = false, nullable = false)
-    UUID id;
+    @GeneratedValue
+    Integer id;
 
     @Column(nullable = false, unique = true)
     String username;
@@ -55,10 +55,5 @@ public class User {
         return Role.valueOf(className); // converts String -> Role enum
     }
 
-    @PrePersist
-    public void prePersist() {
-        if (id == null) {
-            id = UUID.randomUUID();
-        }
-    }
+
 }
