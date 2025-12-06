@@ -12,6 +12,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -25,8 +26,8 @@ import java.time.LocalDateTime;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer id;
+    @Column(updatable = false, nullable = false)
+    UUID id;
 
     @Column(nullable = false, unique = true)
     String username;
@@ -44,8 +45,20 @@ public class User {
     @UpdateTimestamp
     LocalDateTime updatedAt;
 
+
+    private String resetToken;
+    private LocalDateTime tokenExpiry;
+
+
     public Role getRole() {
         String className = this.getClass().getSimpleName().toUpperCase(); // e.g., "ADMIN"
         return Role.valueOf(className); // converts String -> Role enum
+    }
+
+    @PrePersist
+    public void prePersist() {
+        if (id == null) {
+            id = UUID.randomUUID();
+        }
     }
 }

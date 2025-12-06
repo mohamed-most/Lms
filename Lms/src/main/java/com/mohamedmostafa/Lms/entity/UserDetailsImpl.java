@@ -8,6 +8,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
+
 
 public class UserDetailsImpl implements UserDetails {
 
@@ -16,13 +18,18 @@ public class UserDetailsImpl implements UserDetails {
     private final String password;
     private final Role role;
     @Getter
-    private final Integer id;
+    private final UUID id;
 
-    public UserDetailsImpl(Integer id, String email, String password, Role role) {
+    public UserDetailsImpl(UUID id, String email, String password, Role role) {
         this.email = email;
         this.password = password;
         this.role = role;
         this.id = id;
+    }
+
+
+    public UUID getUserId() {
+        return this.getId();
     }
 
     @Override
@@ -39,7 +46,6 @@ public class UserDetailsImpl implements UserDetails {
     public String getUsername() {
         return email;
     }
-
 
     @Override
     public boolean isAccountNonExpired() {
@@ -61,5 +67,5 @@ public class UserDetailsImpl implements UserDetails {
         return true;
     }
 
- 
+
 }
