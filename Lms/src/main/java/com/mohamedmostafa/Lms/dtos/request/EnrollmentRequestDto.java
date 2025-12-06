@@ -2,17 +2,17 @@ package com.mohamedmostafa.Lms.dtos.request;
 
 import com.mohamedmostafa.Lms.enums.CourseStatus;
 import jakarta.validation.constraints.NotNull;
-import lombok.Value;
+import lombok.Data;
 
-@Value
+@Data
 public class EnrollmentRequestDto {
 
     @NotNull
-    Integer studentId;
+    private Integer studentId;
 
     @NotNull
-    Integer courseId;
+    private Integer courseId;
 
 
-    CourseStatus status; // optional, default ACTIVE or DROPPED
+    private CourseStatus status; // optional, default ACTIVE or DROPPED
 }
